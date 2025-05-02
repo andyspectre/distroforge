@@ -1,14 +1,11 @@
 #!/bin/bash
 
-# Constants
-readonly SCRIPTS_DIR
+# Initialize variables
 SCRIPTS_DIR="$(pwd)"
 export SCRIPTS_DIR
-
-# Initialize variables
 container_name=""
 distrobox_ini="./distrobox.ini" # Default value in current directory
-dotfiles_path=""                # Default dotfiles path
+dotfiles_path=""
 
 # Function to display help information
 show_help() {
@@ -48,6 +45,7 @@ parse_arguments() {
 		-d | --dotfiles)
 			if [ -n "$2" ]; then
 				dotfiles_path="$2"
+				export dotfiles_path
 				shift
 				shift
 			else
@@ -136,9 +134,9 @@ configure_container() {
 				rootful=$(is_rootful "${container}")
 				if [ "${rootful}" = "true" ]; then
 					echo "Container ${container} is a rootful container."
-					distrobox-enter --root "${container}" -- bash -c "export DOTFILES_PATH=${dotfiles_path}  && cd ${SCRIPTS_DIR} && ./${tag}_config.sh"
+					distrobox-enter --root "${container}" -- bash -c "cd ${SCRIPTS_DIR} && ./${tag}_config.sh"
 				else
-					distrobox-enter "${container}" -- bash -c "export DOTFILES_PATH=${dotfiles_path} && cd ${SCRIPTS_DIR} && ./${tag}_config.sh"
+					distrobox-enter "${container}" -- bash -c "cd ${SCRIPTS_DIR} && ./${tag}_config.sh"
 				fi
 			else
 				continue
