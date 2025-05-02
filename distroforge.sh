@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Constants
-readonly SCRIPTS_DIR="$(pwd)"
+readonly SCRIPTS_DIR
+SCRIPTS_DIR="$(pwd)"
 export SCRIPTS_DIR
 
 # Initialize variables
