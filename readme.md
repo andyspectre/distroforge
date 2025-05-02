@@ -1,6 +1,6 @@
 # Distroforge
 
-A collection of shell scripts to forge [Distrobox](https://github.com/89luca89/distrobox) containers with specific development environments and tools. Totally a work in progress.
+A collection of shell scripts to forge [Distrobox](https://github.com/89luca89/distrobox) containers with specific environments and tools. This is totally a work in progress with likely many small issues. I tried to keep the same POSIX compliant style as distrobox. The main idea is to have consistent environments, so if you have a bunch of distroboxes they will all have the same base and familiar configs (tmux, vim, zsh etc.), this is done via stow. Another advantage is to declare the role of each container in the distrobox.ini via tags; so you'll have your java container, mobile container, etc. Then with one command you can create and configure containers with applications and configurations based on the tags.
 
 ## Features
 
@@ -13,9 +13,6 @@ A collection of shell scripts to forge [Distrobox](https://github.com/89luca89/d
 ## Prerequisites
 
 - Distrobox installed on your system
-- Bash shell
-- sudo privileges
-- GNU Stow (for dotfiles management)
 
 ## Installation
 
