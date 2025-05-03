@@ -3,6 +3,7 @@
 
 distro=""
 pkg_manager=""
+shell_config_file=""
 
 
 # Check the linux distribution and set the package manager
@@ -31,8 +32,27 @@ set_pkg_manager() {
     fi
 }
 
+# Function to determine the shell profile
+get_shell_config_file() {
+    # Check current shell environment first
+    if [ -n "${ZSH_VERSION}" ]; then
+        shell_config_file="${HOME}/.zshrc"
+    elif [ -n "${BASH_VERSION}" ]; then
+        shell_config_file="${HOME}/.bashrc"
+    else
+        # Fallback to $SHELL if environment vars not set
+        case "$(basename "${SHELL}")" in
+            zsh)  shell_config_file="${HOME}/.zshrc" ;;
+            bash) shell_config_file="${HOME}/.bashrc" ;;
+            *)    shell_config_file="${HOME}/.profile" ;;
+        esac
+    fi
+}
+
 set_pkg_manager
+get_shell_config_file
 
 # Export variables to make them available to sourcing scripts
 export pkg_manager
 export distro
+export shell_config_file
