@@ -2,6 +2,7 @@
 
 distro=""
 pkg_manager=""
+shell_config_file=""
 
 if [ -z "${SCRIPTS_DIR}" ]; then
     echo "SCRIPTS_DIR is not set. Skipping custom configuration."
@@ -10,7 +11,6 @@ fi
 
 # Source the common distro utilities
 . "${SCRIPTS_DIR}/distro_utils.sh"
-
 
 # Configure system locales
 configure_locales() {
@@ -44,9 +44,12 @@ configure_locales() {
         ;;
     esac
 
-    # Set for current user environment as well
-    export LANG=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
+    # Add locale settings to shell config if not already present
+    for setting in "export LANG=en_US.UTF-8" "export LC_ALL=en_US.UTF-8" "export PERL_UNICODE=S"; do
+        if ! grep -q "^${setting}$" "${shell_config_file}"; then
+            echo "${setting}" >>"${shell_config_file}"
+        fi
+    done
 
     echo "Locale configuration completed"
 }
