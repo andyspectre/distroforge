@@ -52,6 +52,7 @@ install_applications() {
 
 # Configure the evironment
 java_env_config() {
+    cd "${HOME}" || exit 1
     echo "Configuring environment..."
     # Download and install JDK 21 LTS from Adoptium
     echo "Downloading and installing JDK 21 LTS from Adoptium..."
