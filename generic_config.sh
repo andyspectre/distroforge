@@ -1,9 +1,5 @@
 #!/bin/bash
 
-distro=""
-pkg_manager=""
-shell_config_file=""
-
 if [ -z "${SCRIPTS_DIR}" ]; then
     echo "SCRIPTS_DIR is not set. Skipping custom configuration."
     exit 1
@@ -144,11 +140,11 @@ configure_environment() {
 
     # Setup dotfile
     echo "Setting up dotfiles and configuration files..."
-    if [ -z "${DOTFILES_PATH}" ]; then
-        echo "DOTFILES_PATH is not set. Skipping dotfiles configuration."
+    if [ -z "${dotfiles_path}" ]; then
+        echo "dotfiles_path is not set. Skipping dotfiles configuration."
         return
     else
-        echo "Preparing to stow dotfiles from ${DOTFILES_PATH}"
+        echo "Preparing to stow dotfiles from ${dotfiles_path}"
         # Backup config files, to avoid getting conflicts with stow, especially during first installation when .zshrc or .bashrc are not yet managed by stow.
         for config in .bashrc .tmux.conf .vimrc .zshrc; do
             # If it is a regular file and not a symlink, back it up
@@ -167,11 +163,11 @@ configure_environment() {
             fi
         done
 
-        cd "${DOTFILES_PATH}" || exit
+        cd "${dotfiles_path}" || exit
         # Check if files to be stowed exist
         for config in bash zsh vim tmux; do
-            if [ ! -d "${DOTFILES_PATH}/${config}" ]; then
-                echo "Directory ${DOTFILES_PATH}/${config} does not exist. Skipping stow for ${config}."
+            if [ ! -d "${dotfiles_path}/${config}" ]; then
+                echo "Directory ${dotfiles_path}/${config} does not exist. Skipping stow for ${config}."
                 continue
             fi
             stow -t "${HOME}" "${config}"

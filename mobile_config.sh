@@ -1,8 +1,4 @@
 #!/bin/bash
-# shellcheck disable=SC2034
-
-distro=""
-pkg_manager=""
 
 if [ -z "${SCRIPTS_DIR}" ]; then
     echo "SCRIPTS_DIR is not set. Skipping custom configuration."
